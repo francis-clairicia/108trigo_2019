@@ -130,14 +130,14 @@ class Matrix:
         return self
 
     def __pow__(self, y):
-        matrix = self.copy()
-        for _ in range(1, y):
+        matrix = self.identity(self.lines)
+        for _ in range(y):
             matrix *= self
         return matrix
 
     def __ipow__(self, y):
-        matrix = self.copy()
-        for _ in range(1, y):
+        matrix = self.identity(self.lines)
+        for _ in range(y):
             self *= matrix
         return self
 
