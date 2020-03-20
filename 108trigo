@@ -1,0 +1,48 @@
+#! /bin/python3
+# -*- coding: Utf-8 -*
+
+import sys
+from math import sqrt
+from my_trigo import my_exp, my_cos, my_sin, my_cosh, my_sinh
+from matrix import Matrix
+
+MATHEMATIC_FUNCTIONS = {
+    "EXP": my_exp,
+    "COS": my_cos,
+    "SIN": my_sin,
+    "COSH": my_cosh,
+    "SINH": my_sinh
+}
+
+def print_help():
+    print("USAGE")
+    print("\t" + "./108trigo fun a0 a1 a2 ...")
+    print()
+    print("DESCRIPTION")
+    print("\t" + "fun" + "\t" + "function to be applied, among at least \"EXP\", \"COS\", \"SIN\", \"COSH\"")
+    print("\t" + "\t" + "and \"SINH\"")
+    print("\t" + "ai" + "\t" + "coeficients of the matrix")
+    return 0
+
+def main(argc: int, argv: list):
+    if argc == 2 and argv[1] == "-h":
+        return print_help()
+    if argc < 3 or argv[1] not in MATHEMATIC_FUNCTIONS:
+        return 84
+    nb_coefficients = len(argv[2:])
+    if any(not n.isdigit() for n in argv[2:]) or sqrt(nb_coefficients) != int(sqrt(nb_coefficients)):
+        return 84
+    i = 2
+    nb_lines = int(sqrt(nb_coefficients))
+    list_matrix = list()
+    for y in range(nb_lines):
+        list_matrix.append(list())
+        for _ in range(nb_lines):
+            list_matrix[y].append(int(argv[i]))
+            i += 1
+    matrix = MATHEMATIC_FUNCTIONS[argv[1]](Matrix.from_2d_list(list_matrix))
+    matrix.print(2)
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main(len(sys.argv), sys.argv.copy()))
