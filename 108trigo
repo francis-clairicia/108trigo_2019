@@ -24,13 +24,23 @@ def print_help():
     print("\t" + "ai" + "\t" + "coeficients of the matrix")
     return 0
 
+def my_str_isnum(number: str):
+    if number is None:
+        return False
+    number = str(number)
+    if len(number) == 0:
+        return False
+    if number[0] == "-":
+        return str(number[1:]).isdigit()
+    return number.isdigit()
+
 def main(argc: int, argv: list):
     if argc == 2 and argv[1] == "-h":
         return print_help()
     if argc < 3 or argv[1] not in MATHEMATIC_FUNCTIONS:
         return 84
     nb_coefficients = len(argv[2:])
-    if any(not n.isdigit() for n in argv[2:]) or sqrt(nb_coefficients) != int(sqrt(nb_coefficients)):
+    if any(not my_str_isnum(n) for n in argv[2:]) or sqrt(nb_coefficients) != int(sqrt(nb_coefficients)):
         return 84
     i = 2
     nb_lines = int(sqrt(nb_coefficients))

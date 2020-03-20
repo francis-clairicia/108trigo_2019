@@ -136,9 +136,8 @@ class Matrix:
         return matrix
 
     def __ipow__(self, y):
-        matrix = self.identity(self.lines)
-        for _ in range(y):
-            self *= matrix
+        new_matrix = self ** y
+        self.mat = dict(new_matrix.mat)
         return self
 
     def multiplicate_by_constante(self, k):
